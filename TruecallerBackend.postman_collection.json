@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "60f3f6f1-359b-49d9-b78c-a5d538e674bf",
+		"name": "Truecaller Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2204385"
+	},
+	"item": [
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "User Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Nakul Gupta",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "8802631740",
+									"type": "text"
+								},
+								{
+									"key": "country_code",
+									"value": "+91",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Nakul@12345",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "gnakul2001@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/user/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody)",
+									"var data = json.data",
+									"var user_id = null;",
+									"var login_hash = null;",
+									"if(data){",
+									"    user_id = data.user_id;",
+									"    login_hash = data.login_hash;",
+									"}",
+									"pm.collectionVariables.set(\"user_id\", user_id);",
+									"    pm.collectionVariables.set(\"login_hash\", login_hash);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "phone_number",
+									"value": "8802631740",
+									"type": "text"
+								},
+								{
+									"key": "country_code",
+									"value": "+91",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Nakul@12345",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/user/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Actions",
+			"item": [
+				{
+					"name": "Mark Number Spam",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{login_hash}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user_id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "country_code",
+									"value": "+91",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "9524765741",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/actions/make_number_spam",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actions",
+								"make_number_spam"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Search By Name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{login_hash}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user_id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "User name 1",
+									"type": "text"
+								},
+								{
+									"key": "page_no",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "max_result",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/search/by_name",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"by_name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search By Phone Number",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{login_hash}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user_id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "country_code",
+									"value": "+91",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "9524765741",
+									"type": "text"
+								},
+								{
+									"key": "page_no",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "max_result",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/search/by_phone_number",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"by_phone_number"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact Detail By Contact ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{login_hash}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user_id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "contact_id",
+									"value": "5PMkdCInUk7vBUb1biOa4OHpagS7ZjeDK2Nx2kzHJkMECsZQZ_",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/search/details/contact_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"details",
+								"contact_id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact Detail By User ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{login_hash}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{user_id}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "njbhjy8tr7ytrfdcvbhgfdr657646578iyugfhuyyt54556734",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/search/details/user_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"details",
+								"user_id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"key": "login_hash",
+			"value": ""
+		}
+	]
+}
