@@ -45,7 +45,7 @@ class UserLogin(APIView):
         country_code = req_data.get("country_code", "")
         try:
             phone_number = int(req_data.get("phone_number", 0))
-        except:
+        except Exception:
             return get_response("error", "Invalid Request.")
         password = req_data.get("password", "")
 
@@ -70,5 +70,5 @@ class UserLogin(APIView):
                 return get_response("error", "Password Incorrect")
         except User.DoesNotExist:
             return get_response("error", "User not found")
-        except Exception as e:
+        except Exception:
             return get_response("error", "Error getting response from server")

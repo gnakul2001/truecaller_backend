@@ -19,7 +19,7 @@ class SearchByName(APIView):
         try:
             page_no = int(req_data.get("page_no", 1))
             max_result = int(req_data.get("max_result", 10))
-        except:
+        except Exception:
             return get_response("error", "Invalid Request.")
 
         if name == "" or page_no <= 0 or max_result <= 0:
@@ -65,9 +65,9 @@ class SearchByName(APIView):
 
         # Fetch the results for start_with_name and contain_name based on pagination
         start_with_results = start_with_name[
-            start_with_name_counts[0] : start_with_name_counts[1]
+            start_with_name_counts[0]: start_with_name_counts[1]
         ]
-        contain_results = contain_name[contain_counts[0] : contain_counts[1]]
+        contain_results = contain_name[contain_counts[0]: contain_counts[1]]
 
         # Combine the results
         final_results = list(chain(start_with_results, contain_results))
@@ -138,7 +138,7 @@ class SearchByPhoneNumber(APIView):
             phone_number = int(req_data.get("phone_number", 0))
             page_no = int(req_data.get("page_no", 1))
             max_result = int(req_data.get("max_result", 10))
-        except:
+        except Exception:
             return get_response("error", "Invalid Request.")
 
         # Validate the parameters
@@ -153,7 +153,7 @@ class SearchByPhoneNumber(APIView):
         )
 
         # If user exists, get spam count and return the user details
-        if user != None:
+        if user is not None:
             spam_count = 0
             try:
                 # Checking if the number is already on the spam table
@@ -212,7 +212,7 @@ class GetDetailByContactId(APIView):
             .values("contact_id", "name", "country_code", "phone_number")
             .first()
         )
-        if contacts == None:
+        if contacts is None:
             return get_response("error", "Contact Not Found")
 
         spam_count = 0
@@ -244,7 +244,7 @@ class GetDetailByContactId(APIView):
                 return get_response("error", str(e))
 
             # Remove email from the response if the contact does not exist
-            if email != None:
+            if email is not None:
                 contacts["email"] = email
             # Return the formatted response with spam count
             return get_response("success", "Contact Found", contacts)
@@ -270,7 +270,7 @@ class GetDetailByUserId(APIView):
             .first()
         )
 
-        if user == None:
+        if user is None:
             return get_response("error", "Contact Not Found")
 
         spam_count = 0

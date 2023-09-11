@@ -1,10 +1,8 @@
 from django.urls import path
-from truecaller_backend.views.user import *
-from truecaller_backend.views.actions import *
-from truecaller_backend.views.search import *
-from truecaller_backend.views.home_view import *
-from django.contrib import admin
-
+from truecaller_backend.views.search import SearchByName, SearchByPhoneNumber, GetDetailByContactId, GetDetailByUserId
+from truecaller_backend.views.actions import MarkNumberSpam
+from truecaller_backend.views.home_view import HomeView
+from truecaller_backend.views.user import UserRegister, UserLogin
 urlpatterns = [
     # Home view, accessible at the root URL
     path(

@@ -1,0 +1,7 @@
+django
+mysqlclient
+djangorestframework
+bcrypt
+flake8
+pytest
+pytest-django

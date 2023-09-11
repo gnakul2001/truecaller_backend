@@ -15,7 +15,7 @@ class MarkNumberSpam(APIView):
             country_code = req_data.get("country_code", "")
             try:
                 phone_number = int(req_data.get("phone_number", 0))
-            except:
+            except Exception:
                 return get_response("error", "Invalid Request.")
 
             if country_code == "" or phone_number == 0:

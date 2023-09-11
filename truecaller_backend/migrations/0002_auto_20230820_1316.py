@@ -41,18 +41,18 @@ def insert_contacts(apps, schema_editor):
         # or if i is divisble by 3 then contact is imported by "TrueCaller Team"
         # else contact is imported by "TrueCaller Team 1"
         user_id_imported_contacts = (
-            f"gvdhbjnghdjnsbdahjsdgjhy65r6787fhvgbhgvcy5645tfgsd"
+            "gvdhbjnghdjnsbdahjsdgjhy65r6787fhvgbhgvcy5645tfgsd"
             if i % 2 == 0
             else (
-                f"njbhjy8tr7ytrfdcvbhgfdr657646578iyugfhuyyt54556734"
+                "njbhjy8tr7ytrfdcvbhgfdr657646578iyugfhuyyt54556734"
                 if i % 3 == 0
-                else f"bhkscnkvgusdhuiygushbjdsgd762374yighjwfdsgdsdf534w"
+                else "bhkscnkvgusdhuiygushbjdsgd762374yighjwfdsgdsdf534w"
             )
         )
         # If i is greater than 50 then add IH_ suffix to the name.
         # This will help in arranging the search result by str starts
         # with name in the first then if the string containg in middle.
-        name = (f"IH_" if i > 50 else "") + f"User Name {i%10}"
+        name = ("IH_" if i > 50 else "") + f"User Name {i%10}"
         country_code = "+91"
         phone_number = f"952476574{i%10}"
         Contacts.objects.create(

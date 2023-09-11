@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import *
+from .models import Contacts, SpamContacts, User, UserSpammedContacts
 from .helper import encrypt_string, generate_random_string
 
 

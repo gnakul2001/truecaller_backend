@@ -174,8 +174,8 @@ class SpamTests(APITestCase):
 
         # Define headers for subsequent requests
         self.headers = {
-            "Authorization": f"Bearer {login_hash}",
-            "user-id": self.user_id,
+            "HTTP_AUTHORIZATION": f"Bearer {login_hash}",
+            "HTTP_USER_ID": self.user_id,
         }
 
     def user_login(self):
@@ -214,9 +214,7 @@ class SpamTests(APITestCase):
         }
 
         # Make a POST request to the url with the given data
-        response = self.client.post(
-            mark_spam_url, data, format="json", headers=self.headers
-        )
+        response = self.client.post(mark_spam_url, data, format="json", **self.headers)
         # Check that the response status code is 200 OK
         self.assertEqual(response.status_code, 200)
 
@@ -240,9 +238,7 @@ class SpamTests(APITestCase):
 
         mark_spam_url = reverse("mark_number_spam")
         # Make a POST request to the url with the given data
-        response = self.client.post(
-            mark_spam_url, data, format="json", headers=self.headers
-        )
+        response = self.client.post(mark_spam_url, data, format="json", **self.headers)
 
         # Check that the response status code is 400 BAD REQUEST.
         self.assertEqual(response.status_code, 400)
@@ -261,7 +257,10 @@ class SearchTests(APITestCase):
         login_hash = response_dict["data"]["login_hash"]
 
         # Define headers for subsequent requests
-        self.headers = {"Authorization": f"Bearer {login_hash}", "user-id": user_id}
+        self.headers = {
+            "HTTP_AUTHORIZATION": f"Bearer {login_hash}",
+            "HTTP_USER_ID": user_id,
+        }
 
     def user_login(self):
         # Test case for successful user login
@@ -288,7 +287,7 @@ class SearchTests(APITestCase):
 
         # Make a POST request to the url with the given data
         response = self.client.post(
-            search_by_name_url, data, format="json", headers=self.headers
+            search_by_name_url, data, format="json", **self.headers
         )
         # Check that the response status code is 200 OK
         self.assertEqual(response.status_code, 200)
@@ -316,7 +315,7 @@ class SearchTests(APITestCase):
 
         # Make a POST request to the url with the given data
         response = self.client.post(
-            search_by_name_url, data, format="json", headers=self.headers
+            search_by_name_url, data, format="json", **self.headers
         )
 
         # Check that the response status code is 400 BAD REQUEST.
@@ -333,7 +332,7 @@ class SearchTests(APITestCase):
 
         # Make a POST request to the url with the given data
         response = self.client.post(
-            search_by_name_url, data, format="json", headers=self.headers
+            search_by_name_url, data, format="json", **self.headers
         )
         # Check that the response status code is 400 BAD REQUEST.
         self.assertEqual(response.status_code, 400)
@@ -349,7 +348,7 @@ class SearchTests(APITestCase):
         }
         # Make a POST request to the url with the given data
         response = self.client.post(
-            search_by_phone_url, data, format="json", headers=self.headers
+            search_by_phone_url, data, format="json", **self.headers
         )
         # Check that the response status code is 200 OK
         self.assertEqual(response.status_code, 200)
@@ -377,7 +376,7 @@ class SearchTests(APITestCase):
         }
         # Make a POST request to the url with the given data
         response = self.client.post(
-            search_by_phone_url, data, format="json", headers=self.headers
+            search_by_phone_url, data, format="json", **self.headers
         )
         # Check that the response status code is 200 OK
         self.assertEqual(response.status_code, 200)
@@ -405,7 +404,7 @@ class SearchTests(APITestCase):
         }
         # Make a POST request to the url with the given data
         response = self.client.post(
-            search_by_phone_url, data, format="json", headers=self.headers
+            search_by_phone_url, data, format="json", **self.headers
         )
         # Check that the response status code is 400 BAD REQUEST
         self.assertEqual(response.status_code, 400)
@@ -421,7 +420,7 @@ class SearchTests(APITestCase):
         }
         # Make a POST request to the url with the given data
         response = self.client.post(
-            search_by_phone_url, data, format="json", headers=self.headers
+            search_by_phone_url, data, format="json", **self.headers
         )
         # Check that the response status code is 400 BAD REQUEST
         self.assertEqual(response.status_code, 400)
@@ -435,7 +434,7 @@ class SearchTests(APITestCase):
             get_detail_url,
             {"contact_id": contact_id},
             format="json",
-            headers=self.headers,
+            **self.headers,
         )
         # Check that the response status code is 200 OK
         self.assertEqual(response.status_code, 200)
@@ -463,7 +462,7 @@ class SearchTests(APITestCase):
             get_detail_url,
             {"contact_id": contact_id},
             format="json",
-            headers=self.headers,
+            **self.headers,
         )
         # Check that the response status code is 200 OK
         self.assertEqual(response.status_code, 200)
@@ -491,7 +490,7 @@ class SearchTests(APITestCase):
             get_detail_url,
             {"contact_id": contact_id},
             format="json",
-            headers=self.headers,
+            **self.headers,
         )
         # Check that the response status code is 400 BAD REQUEST
         self.assertEqual(response.status_code, 400)
@@ -505,7 +504,7 @@ class SearchTests(APITestCase):
             get_detail_url,
             {"contact_id": contact_id},
             format="json",
-            headers=self.headers,
+            **self.headers,
         )
         # Check that the response status code is 400 BAD REQUEST
         self.assertEqual(response.status_code, 400)
@@ -518,7 +517,7 @@ class SearchTests(APITestCase):
             url,
             {"user_id": "njbhjy8tr7ytrfdcvbhgfdr657646578iyugfhuyyt54556734"},
             format="json",
-            headers=self.headers,
+            **self.headers,
         )
         # Check that the response status code is 200.
         self.assertEqual(response.status_code, 200)
@@ -545,7 +544,7 @@ class SearchTests(APITestCase):
             url,
             {"user_id": "bhkscnkvgusdhuiygushbjdsgd762374yighjwfdsgdsdf534w"},
             format="json",
-            headers=self.headers,
+            **self.headers,
         )
         # Check that the response status code is 200 OK
         self.assertEqual(response.status_code, 200)
@@ -569,7 +568,7 @@ class SearchTests(APITestCase):
         url = reverse("detail_by_user_id")
         # Make a POST request to the url with the given data
         response = self.client.post(
-            url, {"user_id": "shbfksbhfskdsf"}, format="json", headers=self.headers
+            url, {"user_id": "shbfksbhfskdsf"}, format="json", **self.headers
         )
         # Check that the response status code is 400 BAD REQUEST
         self.assertEqual(response.status_code, 400)
@@ -579,7 +578,7 @@ class SearchTests(APITestCase):
         url = reverse("detail_by_user_id")
         # Make a POST request to the url with the given data
         response = self.client.post(
-            url, {"user_id": None}, format="json", headers=self.headers
+            url, {"user_id": None}, format="json", **self.headers
         )
         # Check that the response status code is 400 BAD REQUEST
         self.assertEqual(response.status_code, 400)

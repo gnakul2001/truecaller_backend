@@ -1,8 +1,10 @@
 # Truecaller Backend Setup Guide
 
+![Python CI](https://github.com/gnakul2001/truecaller_backend/actions/workflows/build.yml/badge.svg)
+
 ## Overview
 
-This backend solution is constructed using Django paired with MySQL. Developed by Nakul Gupta using Python and Django. To set it up and get it running, follow the instructions outlined below.
+This backend solution utilizes Django and is integrated with MySQL. It was developed by Nakul Gupta leveraging Python and Django. Follow the steps below for setup and deployment.
 
 ## Prerequisites
 
@@ -13,33 +15,23 @@ This backend solution is constructed using Django paired with MySQL. Developed b
 
 ### Environment Configuration
 
-1. **Initialize a Virtual Environment**:
+1. **Create a Virtual Environment**:
    ```bash
    python3 -m venv myenv
    ```
 
-2. **Enter the Virtual Environment**:
+2. **Activate the Virtual Environment**:
    ```bash
    source myenv/bin/activate
    ```
 
-3. **Add Django to the Environment**:
+3. **Install the Required Packages**:
    ```bash
-   pip install django
+   pip install -r requirements.txt
    ```
 
-4. **Incorporate MySQL Client**:
-   ```bash
-   pip install mysqlclient
-   ```
-
-5. **Embed Django REST Framework and Bcrypt**:
-   ```bash
-   pip install djangorestframework bcrypt
-   ```
-
-6. **Database Configuration**:\
-Adjust the `settings.py` database settings to match your MySQL details. The `DATABASES` section should resemble:
+4. **Configure the Database**:
+   Update the `settings.py` file with your MySQL credentials. The `DATABASES` section should look like:
 
    ```python
    DATABASES = {
@@ -54,33 +46,34 @@ Adjust the `settings.py` database settings to match your MySQL details. The `DAT
    }
    ```
 
-   Substitute with your specific MySQL credentials. Example:
+   For example:
    ```
    Database: truecaller_backend
    User: nakulgupta
    Password: 12345
+   host: 127.0.0.1
    ```
 
-   🚨 **Important**: Ensure your MySQL server is active and the mentioned database is available before running the Django app.
+   🚨 **Note**: Ensure the MySQL server is running and the specified database exists before starting the Django app.
 
-7. **Initiate Database Migrations**:
+5. **Execute Database Migrations**:
    ```bash
    python manage.py migrate
    ```
 
 ### Launching the Server
 
-To activate the Django server:
+To start the Django server:
 
 ```bash
 python manage.py runserver
 ```
 
-Open `http://localhost:8000/` in your preferred browser to interact with the application.
+Visit `http://localhost:8000/` in your browser to access the application.
 
 ### Sample User Profiles
 
-For testing purposes, utilize the sample user details below:
+For testing, use the sample user credentials provided:
 
 - **User 1**:
   - Mobile: +918802631740
@@ -94,14 +87,14 @@ For testing purposes, utilize the sample user details below:
 
 ### Testing with Postman
 
-Use the provided `TruecallerBackend.postman_collection.json` in the root directory for testing endpoints.
+For endpoint testing, load the `TruecallerBackend.postman_collection.json` found in the root directory.
 
 #### Routes:
 
 **Base URL**: `{{base_url}}`
 
 - **Accounts**:
-  - **User Register**:
+  - **Register User**:
     - **Endpoint**: POST `/user/create`
     - **Parameters**:
       - name: `Nakul Gupta`
@@ -117,7 +110,7 @@ Use the provided `TruecallerBackend.postman_collection.json` in the root directo
       - password: `Nakul@12345`
 
 - **Actions**:
-  - **Mark Number Spam**:
+  - **Mark Number as Spam**:
     - **Endpoint**: POST `/actions/make_number_spam`
     - **Headers**:
       - user-id: `{{user_id}}`
@@ -127,7 +120,7 @@ Use the provided `TruecallerBackend.postman_collection.json` in the root directo
       - phone_number: `9524765741`
 
 - **Search**:
-  - **Search By Name**:
+  - **Search by Name**:
     - **Endpoint**: POST `/search/by_name`
     - **Headers**:
       - user-id: `{{user_id}}`
@@ -136,7 +129,7 @@ Use the provided `TruecallerBackend.postman_collection.json` in the root directo
       - name: `User name 1`
       - page_no: `1`
       - max_result: `10`
-  - **Search By Phone Number**:
+  - **Search by Phone Number**:
     - **Endpoint**: POST `/search/by_phone_number`
     - **Headers**:
       - user-id: `{{user_id}}`
@@ -146,14 +139,14 @@ Use the provided `TruecallerBackend.postman_collection.json` in the root directo
       - phone_number: `9524765741`
       - page_no: `1`
       - max_result: `10`
-  - **Get Contact Detail By Contact ID**:
+  - **Retrieve Contact Details by Contact ID**:
     - **Endpoint**: POST `/search/details/contact_id`
     - **Headers**:
       - user-id: `{{user_id}}`
       - Authorization: Bearer `{{login_hash}}`
     - **Parameters**:
       - contact_id: `5PMkdCInUk7vBUb1biOa4OHpagS7ZjeDK2Nx2kzHJkMECsZQZ_`
-  - **Get Contact Detail By User ID**:
+  - **Retrieve Contact Details by User ID**:
     - **Endpoint**: POST `/search/details/user_id`
     - **Headers**:
       - user-id: `{{user_id}}`
@@ -163,15 +156,15 @@ Use the provided `TruecallerBackend.postman_collection.json` in the root directo
 
 ### Running Tests
 
-To execute all unit tests:
+To run the unit tests:
 
 ```bash
-python manage.py test truecaller_backend
+pytest
 ```
 
-### Cleaning the Project
+### Project Cleanup
 
-To clean the project, run the provided script:
+To reset the project:
 
 ```bash
 chmod +x clean_project.sh
