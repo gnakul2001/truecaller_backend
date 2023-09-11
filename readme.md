@@ -1,6 +1,6 @@
 # Truecaller Backend Setup Guide
 
-![Python CI](https://github.com/gnakul2001/truecaller_backend/actions/workflows/build.yml/badge.svg)
+[![Build](https://github.com/gnakul2001/truecaller_backend/actions/workflows/build.yml/badge.svg)](https://github.com/gnakul2001/truecaller_backend/actions/workflows/build.yml)
 
 ## Overview
 
